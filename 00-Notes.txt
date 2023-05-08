@@ -1,0 +1,20 @@
+Enlaces importantes para tener en cuenta.
+
+Proteger rutas con reactRoute
+https://keepcoding.io/blog/proteccion-de-rutas-con-react-router/
+
+Proteger rutas con reactroute considerando login y permisos:
+https://www.youtube.com/watch?v=42tFXd1PdCk
+
+How to use svgs in react
+https://blog.logrocket.com/how-to-use-svgs-react/
+
+how to use ReactComponente for import svgs in vite
+https://dev.to/cassidoo/importing-svg-files-as-react-components-with-vite-l3n
+
+https://dev.to/cassidoo/importing-svg-files-as-react-components-with-vite-l3n
+
+
+
+
+

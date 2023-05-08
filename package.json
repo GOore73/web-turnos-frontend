@@ -1,0 +1,38 @@
+{
+  "name": "web-turnos-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "format": "prettier --write .",
+    "lint": "eslint --fix . --ext .js,.jsx",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^8.8.0",
+    "lodash": "^4.17.21",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-svg": "^16.1.11",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.39.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "formik": "^2.2.9",
+    "react-router-dom": "^6.11.0",
+    "sass": "^1.62.1",
+    "vite": "^4.3.2",
+    "vite-plugin-svgr": "^3.2.0",
+    "yup": "^1.1.1"
+  }
+}
