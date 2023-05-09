@@ -18,11 +18,11 @@ export const RegisterForm = (props) => {
     // este es para indicar que solo valida al submit
     onSubmit: async (formValue) => {
       try {
-        setError((await authController.register(formValue)).statusText);
-        console.log(error);
+        response = await authController.register(formValue);
+        console.log(response);
         // openLogin();
       } catch (error) {
-        setError(error);
+        setError('error.msg');
       }
     },
   });
