@@ -3,13 +3,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 //objetos con los atributos de cada Route
 import { WebRouter, AdminRouter } from './router';
+import { AuthProvider } from './contexts';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AdminRouter />
-      <WebRouter />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AdminRouter />
+        <WebRouter />
+      </BrowserRouter>
+    </AuthProvider>
   );
 
   // const router = createBrowserRouter([webRouter, adminRouter]);

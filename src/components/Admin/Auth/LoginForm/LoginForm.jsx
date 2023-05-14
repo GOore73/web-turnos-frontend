@@ -1,6 +1,8 @@
 import { Form } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { useAuth } from '../../../../hooks';
 import { initialValues, validationSchema } from './LoginForm.form';
 import { Auth } from '../../../../api';
 import './LoginForm.scss';
@@ -9,22 +11,30 @@ import { set } from 'lodash';
 const authController = new Auth();
 
 export const LoginForm = () => {
+  const { login } = useAuth();
   const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      if (error) setError('');
       try {
-        const response = await authController.login(formValue);
-        if (response.status !== 200) throw response;
+        const res = await authController.login(formValue);
+        if (!res.response.status) {
+          throw res;
+        }
+        if (res.response.status !== 200) {
+          setError(res.result.msg);
+        } else {
+          //registrar el accesstoken en el contexto
+          authController.setAccessToken(res.result.access);
+          authController.setRefreshToken(res.result.refresh);
+          login(res.result.access);
+          setError('OK');
+        }
       } catch (err) {
-        setError(
-          err.msg
-            ? `${err.status}, ${err.msg}`
-            : `${err.status}:${err.statusText}`
-        );
-        console.log(err);
+        setError('Error externo a la aplicación');
       }
     },
   });

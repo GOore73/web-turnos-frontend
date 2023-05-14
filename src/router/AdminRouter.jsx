@@ -3,9 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import { Auth, Users, Blog, Courses, Menu, Newsletter } from '../pages/admin/';
 import { AdminLayout } from '../layouts';
 import { ProtectedRoute } from '../router';
+import { useAuth } from '../hooks';
 
 const AdminRouter = () => {
-  const user = null;
+  // const user = null;
+  // const user = { role: 'admin' };
+  const { user } = useAuth();
+
   // const user = {
   //   id: 1,
   //   permissions: ['admin'],
@@ -20,9 +24,8 @@ const AdminRouter = () => {
         {/* Rutas protegidas, todas con la misma regla, por eso están dentro de un único ProtectedRoute: */}
         <Route
           element={
-            <ProtectedRoute
-              isAllowed={!!user && user.permissions.includes('admin')}
-            />
+            // <ProtectedRoute isAllowed={!!user && user.role.includes('admin')} />
+            <ProtectedRoute isAllowed={!!user} />
           }
         >
           {['/admin/', '/admin/blog'].map((path) => (

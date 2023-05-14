@@ -3,6 +3,7 @@ import { Tab } from 'semantic-ui-react';
 import './Auth.scss';
 import { Icon } from '../../../assets';
 import { RegisterForm, LoginForm } from '../../../components/Admin/Auth';
+
 const Auth = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const openLogin = () => setActiveIndex(0);
