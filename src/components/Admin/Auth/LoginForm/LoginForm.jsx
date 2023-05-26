@@ -6,12 +6,11 @@ import { useAuth } from '../../../../hooks';
 import { initialValues, validationSchema } from './LoginForm.form';
 import { Auth } from '../../../../api';
 import './LoginForm.scss';
-import { set } from 'lodash';
 
 const authController = new Auth();
 
 export const LoginForm = () => {
-  const { login } = useAuth();
+  const { login } = useAuth(); //función que actualiza los datos de login y token en el contexto
   const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: initialValues(),

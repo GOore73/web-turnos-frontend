@@ -1,5 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import { User, Auth } from '../api';
+import { hasExpiredToken } from '../utils';
+import { ref } from 'yup';
 
 const userController = new User();
 const authController = new Auth();
@@ -17,10 +19,41 @@ export function AuthProvider(props) {
     (async () => {
       const accessToken = authController.getAccessToken();
       const refreshToken = authController.getRefreshToken();
-      await login(accessToken);
+
+      if (!accessToken || !refreshToken) {
+        //el usuario no está logueado
+        logout();
+        setLoading(false);
+        return;
+      }
+
+      if (hasExpiredToken(accessToken)) {
+        // ha caducado el access
+        if (hasExpiredToken(refreshToken)) {
+          logout();
+        } else {
+          await reLogin(refreshToken);
+        }
+      } else {
+        await login(accessToken);
+      }
+
+      //comprobar tokens
       setLoading(false);
     })();
   }, []);
+
+  const reLogin = async (refreshToken) => {
+    try {
+      const { accessToken } = await authController.refreshAccessToken(
+        refreshToken
+      );
+      authController.setAccessToken(accessToken);
+      await login(accessToken);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const login = async (accessToken) => {
     try {
@@ -33,10 +66,17 @@ export function AuthProvider(props) {
     }
   };
 
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    authController.removeTokens();
+  };
+
   const data = {
     accessToken: token,
     user,
     login,
+    logout,
   };
 
   if (loading) return null; //si ya está cargada la sesión.

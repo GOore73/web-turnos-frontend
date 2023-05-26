@@ -1,44 +1,68 @@
 import React, { Fragment } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Auth, Users, Blog, Courses, Menu, Newsletter } from '../pages/admin/';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import {
+  Auth,
+  Users,
+  Blog,
+  Courses,
+  Menu,
+  Newsletter,
+  C404,
+} from '../pages/admin/';
 import { AdminLayout } from '../layouts';
 import { ProtectedRoute } from '../router';
 import { useAuth } from '../hooks';
 
 const AdminRouter = () => {
-  // const user = null;
-  // const user = { role: 'admin' };
   const { user } = useAuth();
-
-  // const user = {
-  //   id: 1,
-  //   permissions: ['admin'],
-  // }; //marca de usuario existente o no;
-  // !!user es igual al condicional user? true : false
 
   return (
     <Routes>
       <Route path='/admin/' element={<AdminLayout />}>
-        {/* Rutas no protegidas: */}
-        <Route path='/admin/auth' element={<Auth />} />
-        {/* Rutas protegidas, todas con la misma regla, por eso están dentro de un único ProtectedRoute: */}
-        <Route
-          element={
-            // <ProtectedRoute isAllowed={!!user && user.role.includes('admin')} />
-            <ProtectedRoute isAllowed={!!user} />
-          }
-        >
-          {['/admin/', '/admin/blog'].map((path) => (
-            <Route key={path} path={path} element={<Blog />} />
-          ))}
-          {/* Esto es cargar en un array todas las rutas que cargan el mismo elemento */}
-          <Route path='/admin/users' element={<Users />} />
-          <Route path='/admin/courses' element={<Courses />} />
-          <Route path='/admin/menu' element={<Menu />} />
-          <Route path='/admin/newsletter' element={<Newsletter />} />
-        </Route>
+        {/* 1. Subrutas: */}
+        {/* 1. 1 Subrutas no protegidas (admin, blog y cursos) */}
+        {['/admin/', 'blog'].map((path) => (
+          <Route key={path} path={path} element={<Blog />} />
+        ))}
+        {/* 1. 2 Subrutas que requieren usuario logueado */}
+        {!user && <Route path='/admin/*' element={<Auth />} />}
+        {/* 1. 3 Subrutas que requieren usuario logueado y con perfil admin  */}
+        {user && user.role.includes('admin') && (
+          <>
+            <Route path='courses' element={<Courses />} />
+            <Route path='auth' element={<Navigate to='/admin/blog' />} />
+            <Route path='users' element={<Users />} />
+            <Route path='menu' element={<Menu />} />
+            <Route path='newsletter' element={<Newsletter />} />
+          </>
+        )}
+        {/* 1. 4 Subruta de admin no reconocida */}
+        <Route path='*' element={<C404 />} />
       </Route>
     </Routes>
+
+    // <Routes>
+    //   <Route path='/admin/' element={<AdminLayout />}>
+    //     {/* Rutas no protegidas: */}
+    //     <Route path='/admin/auth' element={<Auth />} />
+    //     {/* Rutas protegidas, todas con la misma regla, por eso están dentro de un único ProtectedRoute: */}
+    //     <Route
+    //       element={
+    //         // <ProtectedRoute isAllowed={!!user && user.role.includes('admin')} />
+    //         <ProtectedRoute isAllowed={!!user} />
+    //       }
+    //     >
+    //       {['/admin/', '/admin/blog'].map((path) => (
+    //         <Route key={path} path={path} element={<Blog />} />
+    //       ))}
+    //       {/* Esto es cargar en un array todas las rutas que cargan el mismo elemento */}
+    //       <Route path='/admin/users' element={<Users />} />
+    //       <Route path='/admin/courses' element={<Courses />} />
+    //       <Route path='/admin/menu' element={<Menu />} />
+    //       <Route path='/admin/newsletter' element={<Newsletter />} />
+    //     </Route>
+    //   </Route>
+    // </Routes>
   );
 };
 
