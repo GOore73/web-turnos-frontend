@@ -20,4 +20,12 @@ export class User {
       return error;
     }
   }
+
+  async createUser(accessToken, data) {
+    try {
+      console.lot(data);
+    } catch (error) {
+
+    }
+  }
 }

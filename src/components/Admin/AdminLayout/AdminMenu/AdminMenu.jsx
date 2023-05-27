@@ -11,7 +11,6 @@ export const AdminMenu = () => {
 
   const isAdmin = user && user.role.includes('admin') ? true : false;
   const isLogged = !!user;
-  console.log(isLogged);
 
   const isCurrentPath = (path) => {
     if (path === pathname) {
@@ -27,7 +26,7 @@ export const AdminMenu = () => {
 
   return (
     <Menu attached='top'>
-      <Dropdown item icon='wrench' simple>
+      <Dropdown item icon='angle down' simple>
         <Dropdown.Menu>
           {isAdmin && (
             <>

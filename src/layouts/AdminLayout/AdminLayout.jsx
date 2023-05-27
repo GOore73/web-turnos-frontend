@@ -6,6 +6,7 @@ import './AdminLayout.scss';
 import { Outlet } from 'react-router-dom';
 
 const AdminLayout = () => {
+  console.log('ejecución del adminLayout');
   return (
     <div className='admin-layout'>
       <div className='admin-layout__left'>

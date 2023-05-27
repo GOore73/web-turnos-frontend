@@ -1,7 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import { User, Auth } from '../api';
 import { hasExpiredToken } from '../utils';
-import { ref } from 'yup';
 
 const userController = new User();
 const authController = new Auth();
@@ -17,6 +16,7 @@ export function AuthProvider(props) {
   useEffect(() => {
     //función anónima autoejecutable, porque el login es una función async
     (async () => {
+      console.log('una ejecución del useEffect authContext');
       const accessToken = authController.getAccessToken();
       const refreshToken = authController.getRefreshToken();
 
