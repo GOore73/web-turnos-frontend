@@ -34,9 +34,9 @@ export const UserForm = (props) => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        console.log('useAuth token: ', accessToken);
-        console.log(authController.getAccessToken());
-        await userController.createUser('token', formValue);
+        await userController.createUser(accessToken, formValue);
+        onReload();
+        close();
       } catch (error) {
         console.error(error);
       }

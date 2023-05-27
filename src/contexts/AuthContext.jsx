@@ -16,7 +16,6 @@ export function AuthProvider(props) {
   useEffect(() => {
     //función anónima autoejecutable, porque el login es una función async
     (async () => {
-      console.log('una ejecución del useEffect authContext');
       const accessToken = authController.getAccessToken();
       const refreshToken = authController.getRefreshToken();
 

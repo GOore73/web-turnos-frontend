@@ -10,7 +10,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <AdminRouter />
-        <WebRouter />
+        {/* <WebRouter /> */}
       </BrowserRouter>
     </AuthProvider>
   );
