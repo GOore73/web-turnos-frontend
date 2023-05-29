@@ -1,4 +1,4 @@
-import { ReactComponent as LogoWhite } from './svg/tincode-white.svg';
+import { ReactComponent as LogoWhite } from './svg/clock-alt-2-svgrepo-com.svg';
 import authBg from './jpg/auth-bg.jpg';
 import homeBanner from './jpg/home-banner.jpg';
 import noAvatar from './jpg/no-avatar.jpg';

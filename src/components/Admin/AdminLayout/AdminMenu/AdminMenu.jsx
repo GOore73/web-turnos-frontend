@@ -32,26 +32,26 @@ export const AdminMenu = () => {
             <>
               <Dropdown.Item as={Link} to='/admin/users'>
                 <Icon name='user outline' />
-                Usuario
+                Usuarios
               </Dropdown.Item>
-              <Dropdown.Item as={Link} to='/admin/menu'>
-                <Icon name='bars' />
-                Menu
+              <Dropdown.Item as={Link} to='/admin/centros'>
+                <Icon name='warehouse' />
+                Centros
               </Dropdown.Item>
-              <Dropdown.Item as={Link} to='/admin/courses'>
-                <Icon name='computer' />
-                Cursos
+              <Dropdown.Item as={Link} to='/admin/actividades'>
+                <Icon name='edit outline' />
+                Actividades
               </Dropdown.Item>
-              <Dropdown.Item as={Link} to='/admin/newsletter'>
-                <Icon name='mail' />
-                Newsletter
+              <Dropdown.Item as={Link} to='/admin/calendarios'>
+                <Icon name='calendar outline' />
+                Calendarios
               </Dropdown.Item>
             </>
           )}
-
-          <Dropdown.Item as={Link} to='/admin/blog'>
-            <Icon name='comment alternate outline' />
-            Blog
+          <Dropdown.Divider />
+          <Dropdown.Item as={Link} to='/admin/turnos'>
+            <Icon name='calendar check' />
+            Turnos
           </Dropdown.Item>
           {isLogged ? (
             <Dropdown.Item onClick={onLogout}>
@@ -67,52 +67,5 @@ export const AdminMenu = () => {
         </Dropdown.Menu>
       </Dropdown>
     </Menu>
-    // <Menu fluid vertical icon text className='admin-menu'>
-    //   {isAdmin && (
-    //     <>
-    //       <Menu.Item
-    //         as={Link}
-    //         to='/admin/users'
-    //         active={isCurrentPath('/admin/users')}
-    //       >
-    //         <Icon name='user outline' />
-    //         Usuario
-    //       </Menu.Item>
-    //       <Menu.Item
-    //         as={Link}
-    //         to='/admin/menu'
-    //         active={isCurrentPath('/admin/menu')}
-    //       >
-    //         <Icon name='bars' />
-    //         Menu
-    //       </Menu.Item>
-    //       <Menu.Item
-    //         as={Link}
-    //         to='/admin/courses'
-    //         active={isCurrentPath('/admin/courses')}
-    //       >
-    //         <Icon name='computer' />
-    //         Cursos
-    //       </Menu.Item>
-    //       <Menu.Item
-    //         as={Link}
-    //         to='/admin/newsletter'
-    //         active={isCurrentPath('/admin/newsletter')}
-    //       >
-    //         <Icon name='mail' />
-    //         Newsletter
-    //       </Menu.Item>
-    //     </>
-    //   )}
-
-    //   <Menu.Item
-    //     as={Link}
-    //     to='/admin/blog'
-    //     active={isCurrentPath('/admin/blog')}
-    //   >
-    //     <Icon name='comment alternate outline' />
-    //     Blog
-    //   </Menu.Item>
-    // </Menu>
   );
 };

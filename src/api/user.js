@@ -72,4 +72,75 @@ export class User {
       throw error;
     }
   }
+
+  async updateUser(accessToken, idUser, userData) {
+    try {
+      const data = userData;
+      if (!data.password) {
+        delete data.password; //si no viene la clave, no la mando así no la blanqueo
+      }
+
+      const formData = new FormData();
+      /* aquí iría un formData.append por cada campo de data.
+      en lugar de esto, Object.keys de un objeto devuelve un array con los nombres de las propiedades del objeto. 
+      Luego, el objeto con ["nombrepropiedad"] devuelve el valor, así que esto es lo que optimiza en lugar de escribir campo a campo*/
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+
+      if (data.fileAvatar) {
+        formData.append("avatar", data.fileAvatar); //esto es porque avatar en el form se llama distinto, debe llevar el valor fileAvatar.
+      }
+
+      const url = `${ENV.BASE_API}/${ENV.API_ROUTES.USER}/${idUser}`;
+      const params = {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      }
+
+      const response = await fetch(url, params);
+      const result = await response.json();
+      if (response.status !== 200) throw result;
+      return result;
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async userActive(accessToken, idUser, state) {
+    const active = {
+      active: state,
+    }
+    try {
+      await this.updateUser(accessToken, idUser, active)
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  async deleteUser(accessToken, idUser) {
+    try {
+      const url = `${ENV.BASE_API}/${ENV.API_ROUTES.USER}/${idUser}`;
+      const params = {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+
+      const response = await fetch(url, params);
+      const result = await response.json();
+      if (response.status !== 200) throw result;
+      return result;
+    } catch (error) {
+      throw error;
+
+    }
+  }
 }

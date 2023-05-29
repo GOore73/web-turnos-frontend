@@ -7,6 +7,7 @@ import { image } from '../../../../assets';
 import { User } from '../../../../api/user';
 import { Auth } from '../../../../api/auth';
 import { useAuth } from '../../../../hooks';
+import { ENV } from '../../../../utils';
 import './UserForm.scss';
 
 const userController = new User();
@@ -29,12 +30,17 @@ export const UserForm = (props) => {
   const { close, onReload, user } = props;
   const { accessToken } = useAuth();
   const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: validationSchema(),
+    initialValues: initialValues(user),
+    validationSchema: validationSchema(user),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        await userController.createUser(accessToken, formValue);
+        if (!user) {
+          await userController.createUser(accessToken, formValue); // crear nuevo usuario
+        } else {
+          await userController.updateUser(accessToken, user._id, formValue);
+          console.log(formValue);
+        }
         onReload();
         close();
       } catch (error) {
@@ -59,6 +65,8 @@ export const UserForm = (props) => {
   const getAvatar = () => {
     if (formik.values.fileAvatar) {
       return formik.values.avatar;
+    } else if (formik.values.avatar) {
+      return `${ENV.BASE_PATH}/${formik.values.avatar}`;
     }
     return image.noAvatar;
   };

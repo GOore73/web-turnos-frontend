@@ -11,6 +11,7 @@ const AdminLayout = () => {
     <div className='admin-layout'>
       <div className='admin-layout__left'>
         <Icon.LogoWhite className='logo' />
+        <h4>Truck APPointment</h4>
         <AdminMenu />
         <div className='logged'>
           <AdminUserLogged className='logged' />

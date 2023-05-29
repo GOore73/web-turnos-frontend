@@ -1,5 +1,5 @@
 import { Form } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../../hooks';
@@ -12,6 +12,7 @@ const authController = new Auth();
 export const LoginForm = () => {
   const { login } = useAuth(); //función que actualiza los datos de login y token en el contexto
   const [error, setError] = useState('');
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -31,6 +32,7 @@ export const LoginForm = () => {
           authController.setRefreshToken(res.result.refresh);
           login(res.result.access);
           setError('OK');
+          navigate('/admin/turnos');
         }
       } catch (err) {
         setError('Error externo a la aplicación');

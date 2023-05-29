@@ -1,3 +1,5 @@
 export * from './UserForm'
 export * from './ListUsers'
 export * from './UserItem'
+export * from './UserActive'
+export * from './UserDelete'

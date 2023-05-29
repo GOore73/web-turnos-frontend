@@ -3,10 +3,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import {
   Auth,
   Users,
-  Blog,
-  Courses,
-  Menu,
-  Newsletter,
+  Actividades,
+  Centros,
+  Calendarios,
+  Turnos,
   C404,
 } from '../pages/admin/';
 import { AdminLayout } from '../layouts';
@@ -21,19 +21,19 @@ const AdminRouter = () => {
       <Route path='/admin/' element={<AdminLayout />}>
         {/* 1. Subrutas: */}
         {/* 1. 1 Subrutas no protegidas (admin, blog y cursos) */}
-        {['/admin/', 'blog'].map((path) => (
-          <Route key={path} path={path} element={<Blog />} />
+        {['/admin/', 'turnos'].map((path) => (
+          <Route key={path} path={path} element={<Turnos />} />
         ))}
         {/* 1. 2 Subrutas que requieren usuario logueado */}
         {!user && <Route path='/admin/*' element={<Auth />} />}
         {/* 1. 3 Subrutas que requieren usuario logueado y con perfil admin  */}
         {user && user.role.includes('admin') && (
           <>
-            <Route path='courses' element={<Courses />} />
-            <Route path='auth' element={<Navigate to='/admin/blog' />} />
+            <Route path='actividades' element={<Actividades />} />
+            <Route path='auth' element={<Navigate to='/admin/turnos' />} />
             <Route path='users' element={<Users />} />
-            <Route path='menu' element={<Menu />} />
-            <Route path='newsletter' element={<Newsletter />} />
+            <Route path='centros' element={<Centros />} />
+            <Route path='calendarios' element={<Calendarios />} />
           </>
         )}
         {/* 1. 4 Subruta de admin no reconocida */}
