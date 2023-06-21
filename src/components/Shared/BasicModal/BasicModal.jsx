@@ -1,12 +1,14 @@
-import { Modal } from 'semantic-ui-react';
+import { Modal, Grid } from 'semantic-ui-react';
 
 export const BasicModal = (props) => {
   const { show, close, title, size, children } = props;
   return (
-    <Modal closeIcon open={show} onClose={close} size={size}>
-      {title && <Modal.Header>{title}</Modal.Header>}
-      <Modal.Content>{children}</Modal.Content>
-    </Modal>
+    <Grid>
+      <Modal closeIcon open={show} onClose={close} size={size}>
+        {title && <Modal.Header>{title}</Modal.Header>}
+        <Modal.Content>{children}</Modal.Content>
+      </Modal>
+    </Grid>
   );
 };
 

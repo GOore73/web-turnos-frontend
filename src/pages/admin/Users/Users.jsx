@@ -35,9 +35,13 @@ export const Users = () => {
   return (
     <>
       <div className='users-page'>
-        <Button className='users-page__add' primary onClick={onOpenCloseModal}>
-          Nuevo usuario
-        </Button>
+        <Button
+          className='users-page__add'
+          primary
+          icon='plus'
+          circular
+          onClick={onOpenCloseModal}
+        ></Button>
         <Tab menu={{ secondary: true }} panes={panes} />
       </div>
       <BasicModal

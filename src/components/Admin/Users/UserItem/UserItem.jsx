@@ -1,5 +1,5 @@
 import './UserItem.scss';
-import { Image, Button, Icon, Confirm } from 'semantic-ui-react';
+import { Image, Button, Icon, Grid } from 'semantic-ui-react';
 import { useState } from 'react';
 import { image } from '../../../../assets';
 import { ENV } from '../../../../utils';
@@ -46,7 +46,7 @@ export const UserItem = (props) => {
 
   return (
     <>
-      <div className='user-item'>
+      <Grid columns={2} stackable className='user-item'>
         <div className='user-item__info'>
           <Image
             avatar
@@ -78,7 +78,7 @@ export const UserItem = (props) => {
             <Icon name='trash' />
           </Button>
         </div>
-      </div>
+      </Grid>
       <BasicModal show={showModal} close={onOpenCloseModal} title={titleModal}>
         <UserForm close={onOpenCloseModal} onReload={onReload} user={user} />
       </BasicModal>

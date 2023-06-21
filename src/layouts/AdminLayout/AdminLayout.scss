@@ -1,6 +1,14 @@
 @import '../../scss/index.scss';
 
-$widthLeftMenu: 200px;
+.ui.grid {
+  margin: 0.2rem;
+}
+
+.logo {
+  height: 30px;
+  width: 100%;
+  margin: 10px 0;
+}
 
 .admin-layout {
   display: flex;
@@ -10,36 +18,10 @@ $widthLeftMenu: 200px;
 
   &__left {
     background-color: $background-dark;
+  }
+  
+  &__h4, &__h6 {
     color: $text-light;
-    width: $widthLeftMenu;
-
-    .logo {
-      height: 30px;
-      width: 100%;
-      margin: 10px 0;
-    }
-    .logged {
-      margin: 0;
-    }
-    h4 {
-      margin-top: 0;
-      text-align: center;
-    }
   }
-
-  &__right {
-    width: calc(100% - $widthLeftMenu);
-    &-header{
-      background-color: $background-dark;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 10px;
-    }
-    &-content {
-      position: relative;
-      margin: 20px;
-    }
-  }
+  
 }
