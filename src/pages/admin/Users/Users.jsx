@@ -34,6 +34,9 @@ export const Users = () => {
   ];
   return (
     <>
+      <div className='users-page__title'>
+        <h4>Users</h4>
+      </div>
       <div className='users-page'>
         <Button
           className='users-page__add'

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import {
   Auth,
@@ -18,6 +18,7 @@ const AdminRouter = () => {
 
   return (
     <Routes>
+      <Route path='/' element={<Navigate to='/admin' />}></Route>
       <Route path='/admin/' element={<AdminLayout />}>
         {/* 1. Subrutas: */}
         {/* 1. 1 Subrutas no protegidas (admin, blog y cursos) */}
