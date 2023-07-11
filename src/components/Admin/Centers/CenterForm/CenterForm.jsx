@@ -1,43 +1,52 @@
-import { Form } from 'semantic-ui-react';
+import { useState } from 'react';
+import { Form, Modal, Button } from 'semantic-ui-react';
 import { useFormik } from 'formik';
+
+import { Center } from '../../../../api/center';
 import { initialValues, validationSchema } from './CenterForm.form';
-// import { useDropzone } from 'react-dropzone';
-import { useCallback } from 'react';
-// import { image } from '../../../../assets';
-// import { User } from '../../../../api/user';
-// import { Auth } from '../../../../api/auth';
 import { useAuth } from '../../../../hooks';
-import { ENV } from '../../../../utils';
 import './CenterForm.scss';
 
+const centerController = new Center();
+
 export const CenterForm = (props) => {
-  const { close, onReload, center } = props;
+  const { close, onReload, center, secondModal } = props;
   const { accessToken } = useAuth();
+  const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: initialValues(center),
     validationSchema: validationSchema(center),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      if (error) setError('');
       try {
         if (!center) {
-          console.log('Crear centro con estos datos:');
-          console.log(formValue);
-          // await userController.createUser(accessToken, formValue); // crear nuevo usuario
+          // crear centro
+          const res = await centerController.createCenter(
+            accessToken,
+            formValue
+          );
+          if (res.status !== 201) {
+            setError(`${res.status} - ${res.statusText}`);
+          } else {
+            onReload();
+            close();
+            secondModal(true);
+          }
         } else {
+          // update centro
           // await userController.updateUser(accessToken, user._id, formValue);
           // console.log(formValue);
         }
-        onReload();
-        close();
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.log(err);
       }
     },
   });
 
   return (
     <Form className='center-form' onSubmit={formik.handleSubmit}>
-      {console.log(formik)}
+      {/* {console.log(formik)} */}
       <Form.Group widths='equal'>
         <Form.Input
           name='name'
@@ -96,6 +105,15 @@ export const CenterForm = (props) => {
           value={formik.values.address.country}
           error={formik.errors.address?.country}
         />
+        <Form.Input
+          name='address.postcode'
+          placeholder='Código postal'
+          onChange={formik.handleChange}
+          value={formik.values.address.postcode}
+          error={formik.errors.address?.postcode}
+        />
+      </Form.Group>
+      <Form.Group widths='equal'>
         <Form.Radio
           toggle
           label='Activo'
@@ -105,6 +123,7 @@ export const CenterForm = (props) => {
       <Form.Button type='submit' primary fluid loading={formik.isSubmitting}>
         {center ? 'Actualizar centro' : 'Crear Centro'}
       </Form.Button>
+      <p>{error}</p>
     </Form>
   );
 };

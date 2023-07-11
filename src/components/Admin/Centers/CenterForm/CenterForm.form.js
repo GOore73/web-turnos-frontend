@@ -9,10 +9,10 @@ export const initialValues = (center) => {
       city: center?.address.city || "",
       state: center?.address.state || "",
       country: center?.address.country || "",
+      postcode: center?.address.codepost || "",
     },
     alias: center?.alias || "",
     active: false,
-    avatar: "",
   };
 }
 
@@ -25,6 +25,7 @@ export const validationSchema = () => {
       num: number().integer().required(true),
       city: string().required(true),
       state: string().required(true),
+      postcode: string().required(true),
       country: string().required(true),
     }),
     active: boolean(),

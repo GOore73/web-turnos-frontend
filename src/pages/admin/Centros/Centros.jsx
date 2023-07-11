@@ -6,6 +6,7 @@ import './Centros.scss';
 
 export const Centros = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showSecondModal, setShowSecondModal] = useState(false);
   const [reload, setReload] = useState(false); //hook para llamar para recargar los datos, por ejemplo al crear un nuevo usuario.
 
   const onOpenCloseModal = () => {
@@ -13,7 +14,6 @@ export const Centros = () => {
   }; //prevState, estatus actual de la variable del estado
 
   const onReload = () => setReload((prevState) => !prevState);
-
   return (
     <>
       <div className='centros-page__title'>
@@ -33,8 +33,18 @@ export const Centros = () => {
         close={onOpenCloseModal}
         title='Crear nuevo centro'
       >
-        <CenterForm close={onOpenCloseModal} onReload={onReload} />
+        <CenterForm
+          close={onOpenCloseModal}
+          onReload={onReload}
+          secondModal={setShowSecondModal}
+        />
       </BasicModal>
+      <BasicModal
+        show={showSecondModal}
+        size='small'
+        title='Centro creado corretamente'
+        close={() => setShowSecondModal(false)}
+      ></BasicModal>
     </>
   );
 };
