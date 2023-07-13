@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Grid, GridColumn, Segment } from 'semantic-ui-react';
 import { BasicModal } from '../../../components/Shared';
-import { CenterForm } from '../../../components/Admin/Centers/CenterForm';
+import { CenterForm, ListCenter } from '../../../components/Admin/Centers';
 import './Centros.scss';
 
 export const Centros = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
-  const [reload, setReload] = useState(false); //hook para llamar para recargar los datos, por ejemplo al crear un nuevo usuario.
+  const [reload, setReload] = useState(false); //hook para llamar para recargar los datos.
 
   const onOpenCloseModal = () => {
     setShowModal((prevState) => !prevState);
@@ -15,19 +15,26 @@ export const Centros = () => {
 
   const onReload = () => setReload((prevState) => !prevState);
   return (
-    <>
-      <div className='centros-page__title'>
-        <h4>Centros</h4>
-      </div>
-      <div className='centros-page'>
-        <Button
-          className='centros-page__add'
-          primary
-          icon='plus'
-          circular
-          onClick={onOpenCloseModal}
-        ></Button>
-      </div>
+    <Grid stackable columns='equal'>
+      <Grid.Row>
+        <Grid.Column>
+          <h4 className='centros-page__title'>Centros</h4>
+        </Grid.Column>
+        <GridColumn>
+          <Button
+            floated='right'
+            primary
+            icon='plus'
+            circular
+            onClick={onOpenCloseModal}
+          ></Button>
+        </GridColumn>
+      </Grid.Row>
+      <Grid.Row>
+        <GridColumn>
+          <ListCenter reload={reload}></ListCenter>
+        </GridColumn>
+      </Grid.Row>
       <BasicModal
         show={showModal}
         close={onOpenCloseModal}
@@ -45,6 +52,6 @@ export const Centros = () => {
         title='Centro creado corretamente'
         close={() => setShowSecondModal(false)}
       ></BasicModal>
-    </>
+    </Grid>
   );
 };

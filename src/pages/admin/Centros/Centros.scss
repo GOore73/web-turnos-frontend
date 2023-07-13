@@ -3,9 +3,7 @@
     display:block 
   }
   &__add {
-    position: absolute;
-    right: 14px;
-    top: 36px;
+    float: right;
   }
 
   > .ui.button {

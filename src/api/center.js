@@ -22,4 +22,21 @@ export class Center {
       return (err);
     }
   }
+  async getCenters(accessToken) {
+    try {
+      const url = `${this.baseApi}/${ENV.API_ROUTES.CENTERS}`;
+      const params = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+      const response = await fetch(url, params);
+      const result = await response.json();
+      if (response.status !== 200) throw { "status": response.status, "statusText": result?.msg || response.statusText };
+      return { "status": 201, "statusText": "OK", data: result };
+    } catch (err) {
+      throw err;
+    }
+  }
+
 }

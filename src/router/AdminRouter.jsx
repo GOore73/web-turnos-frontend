@@ -18,15 +18,16 @@ const AdminRouter = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<Navigate to='/admin' />}></Route>
+      <Route path='/' element={<Navigate to='/admin/turnos' />}></Route>
       <Route path='/admin/' element={<AdminLayout />}>
         {/* 1. Subrutas: */}
         {/* 1. 1 Subrutas no protegidas (admin, blog y cursos) */}
-        {['/admin/', 'turnos'].map((path) => (
+        {/* {['/admin/', 'turnos'].map((path) => (
           <Route key={path} path={path} element={<Turnos />} />
-        ))}
+        ))} */}
         {/* 1. 2 Subrutas que requieren usuario logueado */}
         {!user && <Route path='/admin/*' element={<Auth />} />}
+        {user && <Route path='/admin/turnos' element={<Turnos />} />}
         {/* 1. 3 Subrutas que requieren usuario logueado y con perfil admin  */}
         {user && user.role.includes('admin') && (
           <>
