@@ -15,7 +15,7 @@ export const CenterForm = (props) => {
   const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: initialValues(center),
-    validationSchema: validationSchema(center),
+    validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       if (error) setError('');

@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react';
-import { Loader, List, Table } from 'semantic-ui-react';
+import { Loader, List, Table, Icon, Button } from 'semantic-ui-react';
 import { size, map, _ } from 'lodash';
 import { useAuth } from '../../../../hooks';
 import { Center } from '../../../../api/center';
@@ -7,14 +7,19 @@ import { Center } from '../../../../api/center';
 const centerController = new Center();
 
 export const ListCenter = (props) => {
-  const { reload, onReload } = props;
+  const { reload, showModal, setCenter } = props;
   const [centers, setCenters] = useState(null);
   const { accessToken } = useAuth();
   const [orderColumn, setOrderColumn] = useState({
     counter: 0,
-    column: 'alias',
+    column: null,
     direction: 'ascending',
   });
+
+  const editButton = (centro) => {
+    setCenter(centro);
+    showModal();
+  };
 
   useEffect(() => {
     (async () => {
@@ -75,12 +80,67 @@ export const ListCenter = (props) => {
           >
             Alias
           </Table.HeaderCell>
+          <Table.HeaderCell
+            sorted={
+              orderColumn.column === 'name' ? orderColumn.direction : null
+            }
+            onClick={() =>
+              setOrderColumn({
+                counter: 1,
+                column: 'name',
+                direction:
+                  orderColumn.direction === 'ascending'
+                    ? 'descending'
+                    : 'ascending',
+              })
+            }
+          >
+            Nombre
+          </Table.HeaderCell>
+          <Table.HeaderCell
+            textAlign='center'
+            sorted={
+              orderColumn.column === 'active' ? orderColumn.direction : null
+            }
+            onClick={() =>
+              setOrderColumn({
+                counter: 1,
+                column: 'active',
+                direction:
+                  orderColumn.direction === 'ascending'
+                    ? 'descending'
+                    : 'ascending',
+              })
+            }
+          >
+            Activado?
+          </Table.HeaderCell>
+          <Table.HeaderCell textAlign='center'>Acciones</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {map(centers, ({ _id, alias }) => (
-          <Table.Row key={_id}>
-            <Table.Cell>{alias}</Table.Cell>
+        {map(centers, (cter) => (
+          <Table.Row key={cter._id}>
+            <Table.Cell>{cter.alias}</Table.Cell>
+            <Table.Cell>{cter.name}</Table.Cell>
+            <Table.Cell textAlign='center'>
+              <Icon
+                size='large'
+                color={cter.active ? 'green' : 'red'}
+                name={cter.active ? 'check circle' : 'x'}
+              ></Icon>
+            </Table.Cell>
+            <Table.Cell textAlign='center'>
+              <Button icon color='teal'>
+                <Icon name='eye' onClick={() => editButton(cter)} />
+              </Button>
+              <Button icon primary>
+                <Icon name='pencil' />
+              </Button>
+              <Button icon color='red'>
+                <Icon name='trash' />
+              </Button>
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

@@ -8,10 +8,16 @@ export const Centros = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSecondModal, setShowSecondModal] = useState(false);
   const [reload, setReload] = useState(false); //hook para llamar para recargar los datos.
+  const [center, setCenter] = useState(null);
 
   const onOpenCloseModal = () => {
     setShowModal((prevState) => !prevState);
   }; //prevState, estatus actual de la variable del estado
+
+  const onClickNewCenter = () => {
+    setCenter(null);
+    onOpenCloseModal();
+  };
 
   const onReload = () => setReload((prevState) => !prevState);
   return (
@@ -26,13 +32,17 @@ export const Centros = () => {
             primary
             icon='plus'
             circular
-            onClick={onOpenCloseModal}
+            onClick={onClickNewCenter}
           ></Button>
         </GridColumn>
       </Grid.Row>
       <Grid.Row>
         <GridColumn>
-          <ListCenter reload={reload}></ListCenter>
+          <ListCenter
+            reload={reload}
+            showModal={onOpenCloseModal}
+            setCenter={setCenter}
+          ></ListCenter>
         </GridColumn>
       </Grid.Row>
       <BasicModal
@@ -41,6 +51,7 @@ export const Centros = () => {
         title='Crear nuevo centro'
       >
         <CenterForm
+          center={center}
           close={onOpenCloseModal}
           onReload={onReload}
           secondModal={setShowSecondModal}
